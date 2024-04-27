@@ -76,6 +76,7 @@ app.get('/users', (req, res) => {
     res.json(users);
 });
 app.get('/admin', (req, res) => {
+    console.log(`lolo`)
     // В реальном приложении здесь может быть проверка на администраторские права
     res.json(users);
 });
