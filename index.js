@@ -184,19 +184,20 @@ function getCurrentUser(req){
     }
     return currentUser
 }
-app.put('/admin/block/:id', (req, res) => {
-    const userId = req.params.id.slice(1);
+app.put('/admin/block', (req, res) => {
+    const userIds = req.body.selectedRows;
     const currentUser = getCurrentUser(req);
-    if (currentUser.status === 'blocked'){
-        return res.status(403).json({error: "Not permitted. User blocked"})
+    if (currentUser.status === 'blocked') {
+        return res.status(403).json({ error: "Not permitted. User blocked" });
     }
-    const user = users.find(user => user.id === userId);
-    if (!user) {
-        return res.status(404).json({ error: 'User not found' });
+    for (const userId of userIds) {
+        const user = users.find(user => user.id === userId);
+        if (user) {
+            user.status = 'blocked';
+        }
     }
 
-    user.status = 'blocked';
-    res.json({ message: 'User blocked successfully' });
+    res.json({ message: 'Users blocked successfully'});
 });
 
 app.put('/users/unblock/:id', (req, res) => {
