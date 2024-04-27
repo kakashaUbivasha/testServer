@@ -194,9 +194,10 @@ app.put('/admin/block', (req, res) => {
     }
     for (const userId of userIds) {
         const user = users.find(user => user.id === userId);
-        if (user) {
-            user.status = 'blocked';
-        }
+        if (!user) {
+        return res.status(404).json({ error: 'User not found' });
+    }
+        user.status = 'blocked';
     }
 
     res.json({ message: 'Users blocked successfully'});
