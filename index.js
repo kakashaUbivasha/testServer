@@ -185,6 +185,7 @@ function getCurrentUser(req){
     return currentUser
 }
 app.put('/admin/block', (req, res) => {
+    console.log(req.body)
     const userIds = req.body.selectedRows;
     const currentUser = getCurrentUser(req);
     if (currentUser.status === 'blocked') {
